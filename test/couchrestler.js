@@ -55,5 +55,17 @@ test.testcase('CouchRestler', {
     
     var doc = this.db.get(id).wait();
     test.assertEquals('hello', doc.booyah);
+  },
+  testShouldBeAbleToUpdateARecordGivenID: function(test) {
+    var result = this.db.put({ test: true, text: 'Some stuff' }).wait();
+    test.assertTrue(result.ok, result);
+    
+    var id = result.id;
+    
+    result = this.db.update(id, { bum: 'larger' }).wait();
+    test.assertTrue(result.ok);
+    
+    var doc = this.db.get(id).wait();
+    test.assertEquals('larger', doc.bum);
   }
 });
